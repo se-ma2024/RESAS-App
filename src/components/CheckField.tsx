@@ -24,41 +24,53 @@ const Styles: { [key: string]: React.CSSProperties } = {
   },
 };
 
-const CheckField: React.FC = () => {
+const CheckField: React.FC<{
+  onCheckboxChange: (
+    prefName: string,
+    prefCode: number,
+    checked: boolean
+  ) => void;
+}> = ({ onCheckboxChange }) => {
   const [prefectures, setPrefectures] = useState<Prefecture[]>([]);
 
   useEffect(() => {
-    axios
-      .get<{ result: Prefecture[] }>(
-        "https://opendata.resas-portal.go.jp/api/v1/prefectures",
-        {
-          headers: { "X-API-KEY": process.env.REACT_APP_API_KEY as string },
-        }
-      )
-      .then((response) => {
+    const fetchPrefectures = async () => {
+      try {
+        const response = await axios.get<{ result: Prefecture[] }>(
+          "https://opendata.resas-portal.go.jp/api/v1/prefectures",
+          {
+            headers: { "X-API-KEY": process.env.REACT_APP_API_KEY as string },
+          }
+        );
         setPrefectures(response.data.result);
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error("Error fetching prefectures:", error);
-      });
+      }
+    };
+
+    fetchPrefectures();
   }, []);
+
+  const handleCheckboxChange = (
+    event: React.ChangeEvent<HTMLInputElement>,
+    prefCode: number,
+    prefName: string
+  ) => {
+    onCheckboxChange(prefName, prefCode, event.target.checked);
+  };
 
   return (
     <div style={Styles.checkcardList}>
       {prefectures.map((prefecture) => (
-        <div style={Styles.checkcard} key={prefecture.prefName}>
+        <div key={prefecture.prefCode} style={Styles.checkcard}>
           <input
             type="checkbox"
-            name="prefecture"
-            value={prefecture.prefCode}
-            id={`checkbox-${prefecture.prefCode}`}
+            name={prefecture.prefName}
+            onChange={(e) =>
+              handleCheckboxChange(e, prefecture.prefCode, prefecture.prefName)
+            }
           />
-          <label
-            htmlFor={`checkbox-${prefecture.prefCode}`}
-            style={Styles.text}
-          >
-            {prefecture.prefName}
-          </label>
+          <label style={Styles.text}>{prefecture.prefName}</label>
         </div>
       ))}
     </div>
