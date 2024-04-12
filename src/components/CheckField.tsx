@@ -1,28 +1,11 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import "./CheckField.css";
 
 interface Prefecture {
   prefCode: number;
   prefName: string;
 }
-
-const Styles: { [key: string]: React.CSSProperties } = {
-  checkcardList: {
-    display: "flex",
-    flexWrap: "wrap",
-    padding: "10px",
-    justifyContent: "flex-start",
-    justifySelf: "auto",
-  },
-  text: { display: "contents", marginLeft: "1em", cursor: "pointer" },
-  checkcard: {
-    borderRadius: "12px",
-    border: "solid 1px",
-    textAlign: "center",
-    padding: "10px 12px 8px 8px",
-    margin: "0.5rem",
-  },
-};
 
 const CheckField: React.FC<{
   onCheckboxChange: (
@@ -60,17 +43,23 @@ const CheckField: React.FC<{
   };
 
   return (
-    <div style={Styles.checkcardList}>
+    <div className="checkcardList">
       {prefectures.map((prefecture) => (
-        <div key={prefecture.prefCode} style={Styles.checkcard}>
+        <div key={prefecture.prefCode} className="checkcardWrapper">
           <input
             type="checkbox"
-            name={prefecture.prefName}
+            id={`checkbox-${prefecture.prefCode}`}
+            className="checkboxInput"
             onChange={(e) =>
               handleCheckboxChange(e, prefecture.prefCode, prefecture.prefName)
             }
           />
-          <label style={Styles.text}>{prefecture.prefName}</label>
+          <label
+            htmlFor={`checkbox-${prefecture.prefCode}`}
+            className="checkboxLabel"
+          >
+            {prefecture.prefName}
+          </label>
         </div>
       ))}
     </div>

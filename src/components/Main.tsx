@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import CheckField from "./CheckField";
 import PopulationGraph from "./Chart";
+import "./Main.css";
 
 const Main: React.FC = () => {
   const [selectedPrefectures, setSelectedPrefectures] = useState<{
@@ -24,7 +25,8 @@ const Main: React.FC = () => {
   };
 
   return (
-    <div className="App">
+    <div className="Main">
+      <h1>都道府県別の総人口推移グラフ</h1>
       {/* CheckFieldコンポーネントを呼び出し */}
       <CheckField onCheckboxChange={handleCheckboxChange} />
       {/* 選択された都道府県の人口推移グラフ */}
