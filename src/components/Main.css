@@ -1,3 +1,23 @@
+/* スマートフォン向けのスタイル */
+@media (max-width: 768px) {
+  .appTitle {
+    font-size: 20px;
+  }
+}
+
+/* タブレット向けのスタイル */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .appTitle {
+    font-size: 30px;
+  }
+}
+
+/* デスクトップ向けのスタイル */
+@media (min-width: 1025px) {
+  .appTitle {
+    font-size: 40px;
+  }
+}
 .Main {
   width: 100vw;
   display: flex;
