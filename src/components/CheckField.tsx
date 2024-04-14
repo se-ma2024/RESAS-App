@@ -44,24 +44,29 @@ const CheckField: React.FC<{
 
   return (
     <div className="checkcardList">
-      {prefectures.map((prefecture) => (
-        <div key={prefecture.prefCode} className="checkcardWrapper">
-          <input
-            type="checkbox"
-            id={`checkbox-${prefecture.prefCode}`}
-            className="checkboxInput"
-            onChange={(e) =>
-              handleCheckboxChange(e, prefecture.prefCode, prefecture.prefName)
-            }
-          />
-          <label
-            htmlFor={`checkbox-${prefecture.prefCode}`}
-            className="checkboxLabel"
-          >
-            {prefecture.prefName}
-          </label>
-        </div>
-      ))}
+      {prefectures &&
+        prefectures.map((prefecture) => (
+          <div key={prefecture.prefCode} className="checkcardWrapper">
+            <input
+              type="checkbox"
+              id={`checkbox-${prefecture.prefCode}`}
+              className="checkboxInput"
+              onChange={(e) =>
+                handleCheckboxChange(
+                  e,
+                  prefecture.prefCode,
+                  prefecture.prefName
+                )
+              }
+            />
+            <label
+              htmlFor={`checkbox-${prefecture.prefCode}`}
+              className="checkboxLabel"
+            >
+              {prefecture.prefName}
+            </label>
+          </div>
+        ))}
     </div>
   );
 };
